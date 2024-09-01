@@ -1,0 +1,35 @@
+#include "SoftwareSerial.h"
+
+SoftwareSerial XBee(2,3);
+
+int BUTTON = 5;
+boolean toggle = false; //this variable keeps track of alternative click of the button
+
+void setup()
+{
+    Serial.begin(9600);
+    pinMode(BUTTON, INPUT_PULLUP);
+    XBee.begin(9600);
+}
+
+void loop()
+{
+    //When button is pressed (GPIO pulled low) send 1
+
+    if (digitalRead(BUTTON) == LOW && toggle)
+    {
+        Serial.println("Turn on LED");
+        toggle = false;
+        XBee.write('1');
+        delay(1000);
+    }
+
+    //When button is pressed second time (GPIO pulled low) send 0
+    else if (digitalRead(BUTTON) == LOW && !toggle)
+    {
+        Serial.println("Turn off LED");
+        toggle = true;
+        XBee.write('0');
+        delay(1000);
+    }
+}
