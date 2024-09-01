@@ -1,0 +1,13 @@
+#include "SoftwareSerial.h"
+
+SoftwareSerial XBee(2,3);
+
+int BUTTON = 5;
+boolean toggle = false; //this variable keeps track of alternative click of the button
+
+void setup()
+{
+    Serial.begin(9600);<br>
+    pinMode(BUTTON, INPUT_PULLUP);<br>
+    XBee.begin(9600);
+}
